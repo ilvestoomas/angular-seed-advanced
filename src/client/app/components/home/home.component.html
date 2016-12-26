@@ -8,11 +8,34 @@
 <p>
   {{'ABOUT_ADD' | translate}}
 </p>
+<div>
+  <form (submit)="addName()">
+    <input [(ngModel)]="newName" name="newName" [placeholder]="'INPUT_HINT' | translate">
+    <button type="submit">{{'ADD_BTN_TEXT' | translate}}</button>
+  </form>
+</div>
+<br>
+<div>
+  <form (submit)="removeName()">
+    <input [(ngModel)]="deleteName" name="newName" [placeholder]="'Delete the guy'">
+    <button type="submit">DELETE</button>
+  </form>
+</div>
+<br>
+<div>
+  <form (submit)="getToState()">
+    <button type="submit">Get To State 3</button>
+  </form>
+</div>
+<!--
 
-<form (submit)="addName()">
-  <input [(ngModel)]="newName" name="newName" [placeholder]="'INPUT_HINT' | translate">
-  <button type="submit">{{'ADD_BTN_TEXT' | translate}}</button>
-</form>
+div>
+  <form (submit)="deleteName()">
+    <input [(ngModel)]="deleteName" name="deleteName" [placeholder]="'delete the guy'">
+    <button type="submit">DELETE</button>
+  </form>
+</div>
+-->
 
 <ul>
   <li *ngFor="let name of (names$ | async)">{{name}}</li>

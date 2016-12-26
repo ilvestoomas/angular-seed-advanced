@@ -13,7 +13,12 @@ export function reducer(
 
     case actions.ActionTypes.NAME_ADDED:
       return (<any>Object).assign({}, state, {
-        names: [...state.names, action.payload]
+        names: [...state.names, action.payload ]
+      });
+
+    case actions.ActionTypes.DELETE:
+      return (<any>Object).assign({}, state, {
+          names: state.names.filter(name => name !== action.payload)
       });
 
     default:

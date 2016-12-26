@@ -15,6 +15,7 @@ export interface INameListActions {
   INITIALIZED: string;
   INIT_FAILED: string;
   ADD: string;
+  DELETE: string;
   NAME_ADDED: string;
 }
 
@@ -51,6 +52,12 @@ export class InitFailedAction implements Action {
 
 export class AddAction implements Action {
   type = ActionTypes.ADD;
+
+  constructor(public payload: string) { }
+}
+
+export class DeleteAction implements Action {
+  type = ActionTypes.DELETE;
 
   constructor(public payload: string) { }
 }

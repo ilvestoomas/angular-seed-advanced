@@ -16,6 +16,8 @@ import * as nameList from '../../frameworks/sample/index';
 export class HomeComponent {
   public names$: Observable<any>;
   public newName: string = '';
+  public deleteName: string = '';
+
 
   constructor(private store: Store<IAppState>, public routerext: RouterExtensions) {
     this.names$ = store.let(getNames);
@@ -28,8 +30,25 @@ export class HomeComponent {
   addName(): boolean {
     this.store.dispatch(new nameList.AddAction(this.newName));
     this.newName = '';
+    //
     return false;
   }
+
+  removeName(): boolean {
+    this.store.dispatch(new nameList.DeleteAction(this.deleteName));
+    this.newName = '';
+    return false;
+  }
+
+  getToState(): void{
+    this.store.dispatch({type: 'SET_STATE', payload:10});
+  }
+
+/*
+  deleteName(): void {
+    console.log("delete name"); //   this.store.dispatch(new nameList.DeleteAction(this.deleteName));
+  //  this.deleteName = '';
+  }*/
 
   readAbout() {
     // Try this in the {N} app

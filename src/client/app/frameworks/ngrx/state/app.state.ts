@@ -64,11 +64,50 @@ const reducers = {
 const developmentReducer: ActionReducer<IAppState> = compose(storeFreeze, combineReducers)(reducers);
 const productionReducer: ActionReducer<IAppState> = combineReducers(reducers);
 
+
+const RESET_STATE = 'RESET_STATE';
+
+const INIT = '__NOT_A_REAL_ACTION__';
+
+const metaReducer = reducer => {
+  let initialState = reducer(undefined, {type: INIT})
+
+  let states = [];
+
+  return function (state :any, action: any) {
+    //if reset action is fired, return initial state
+
+    switch (action.type) {
+      case 'RESET_STATE' :
+        state = initialState;
+        break;
+      case 'SET_STATE' :
+        return Object.assign({}, states[action.payload]);
+        break;
+      default:
+    }
+
+    if(action.type === RESET_STATE){
+      return initialState;
+    }
+
+    //calculate next state based on action
+    let nextState = reducer(state, action);
+
+    states.push(nextState);
+    //return nextState as normal when not reset action
+    return nextState;
+  }
+}
+
+let metaRedeucedReducer = metaReducer(developmentReducer);
+
 export function AppReducer(state: any, action: any) {
+
   if (String('<%= BUILD_TYPE %>') === 'dev') {
-    return developmentReducer(state, action);
+    return metaRedeucedReducer(state, action);
   } else {
-    return productionReducer(state, action);
+    return metaRedeucedReducer(state, action);
   }
 }
 
